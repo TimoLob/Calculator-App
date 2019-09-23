@@ -20,7 +20,7 @@ class _CalculatorState extends State<Calculator> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
 
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[Text(_equation), buildButtonGrid()],
+          children: <Widget>[Container(child: Text(_equation,textScaleFactor: 3,)), buildButtonGrid()],
         ));
   }
 
@@ -69,9 +69,11 @@ class _CalculatorState extends State<Calculator> {
 
   String solveOnePriority(String eq,List<String> operators,List functions)
   {
-    while(eq.contains(operators[0]) || eq.contains(operators[1]))
+    print(eq);
+    while(eq.contains(operators[0],1) || eq.contains(operators[1],1))
     {
-      for(int i=0;i<eq.length;i++)
+      print(eq);
+      for(int i=1;i<eq.length;i++)
       {
         if (eq[i] == operators[0] || eq[i]==operators[1])
         {
@@ -105,10 +107,13 @@ class _CalculatorState extends State<Calculator> {
           else
           {
             eq = eq.replaceAll(eq.substring(leftIndex,rightIndex), functions[1](leftNumber,rightNumber).toString());
+            break;
           }
+          
         }
       }
     }
+    print(eq);
     return eq;
   }
 
@@ -137,10 +142,12 @@ class _CalculatorState extends State<Calculator> {
 
   Widget buildButton(String text) {
     return GestureDetector(
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(text),
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: Container(
+          color: Colors.lightBlueAccent,
+            child: Center(child: Text(text)),
+
         ),
       ),
       onTap: () => onTabListener(text),
